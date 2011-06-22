@@ -34,4 +34,12 @@
   return array;
 }
 
+- (BOOL)all: (BOOL (^)(id obj))block {
+    BOOL match = YES;
+    for(id obj in self)
+        if(!block(obj))
+            match = NO;
+    return match;
+}
+
 @end
