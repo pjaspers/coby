@@ -1,3 +1,3 @@
 # Coby
 
-Opiniated categories on default objc-classes.
+Opinionated categories on default objc-classes.
