@@ -1,6 +1,6 @@
 @interface NSDictionary (Coby)
 - (id)fetch:(NSString *)key;
-- (id)fetch:(NSString *)key default:(NSString *)defaultValue;
+- (id)fetch:(NSString *)key default:(id)defaultValue;
 @end
 
 @interface NSMutableDictionary (Coby)

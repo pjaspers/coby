@@ -10,6 +10,7 @@
 // if they have no objects, and so on.
 
 - (BOOL)isEmpty {
+    DLog(@"Something is worng here");
     return self == nil
 	|| ([self isEqual:[NSNull null]]) // addition for things like coredata
 	|| ([self try:@"length"] == 0)

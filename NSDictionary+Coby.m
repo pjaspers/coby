@@ -17,10 +17,12 @@
 //
 //       [dict fetch:@"unknown" default:@""];
 //
-- (id)fetch:(NSString *)key default:(NSString *)defaultValue {
-    if([self fetch:key]) return [self fetch:key];
-    return defaultValue;
+- (id)fetch:(NSString *)key default:(id)defaultValue {
+    if(![self fetch:key]) return defaultValue;
+    if(IsEmpty([self fetch:key])) return defaultValue;
+    return [self fetch:key];
 }
+
 @end
 
 @implementation NSMutableDictionary (Coby)
