@@ -1,3 +1,5 @@
+#import <Foundation/Foundation.h>
+
 @interface NSDictionary (Coby)
 - (id)fetch:(NSString *)key;
 - (id)fetch:(NSString *)key default:(id)defaultValue;

@@ -1,3 +1,5 @@
+#import <Foundation/Foundation.h>
+
 @implementation NSDictionary (Coby)
 
 // # Fetch
@@ -19,7 +21,7 @@
 //
 - (id)fetch:(NSString *)key default:(id)defaultValue {
     if(![self fetch:key]) return defaultValue;
-    if(IsEmpty([self fetch:key])) return defaultValue;
+    if([self fetch:key]) return defaultValue;
     return [self fetch:key];
 }
 
