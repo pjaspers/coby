@@ -1,0 +1,5 @@
+# Test suite builds here
+build/*
+
+# Testrunner is compiled by the rake task
+testrunner
