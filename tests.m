@@ -1,6 +1,6 @@
 //
-//  main.m
-//  MACollectionUtilities
+//  tests.m
+//  Coby
 //
 //  Heavily borrowed from [Micheal Ash's simple test harness](https://raw.github.com/mikeash/MACollectionUtilities/master/main.m)
 //
