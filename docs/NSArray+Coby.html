@@ -1,0 +1,109 @@
+<!DOCTYPE html>  <html> <head>   <title>NSArray+Coby.m</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="NSArray+Coby.html">                 NSArray+Coby.m               </a>                                           <a class="source" href="NSDictionary+Coby.html">                 NSDictionary+Coby.m               </a>                                           <a class="source" href="NSObject+Coby.html">                 NSObject+Coby.m               </a>                                           <a class="source" href="tests.html">                 tests.m               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               NSArray+Coby.m             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre><span class="cp">#import &quot;NSArray+Coby.h&quot;</span>
+
+<span class="k">@implementation</span> <span class="nc">NSArray</span> <span class="nl">(Coby)</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <h1>Access</h1>
+
+<p>Returns the tail of the array, returns an empty array if the
+subarray is out of range.</p>
+
+<pre><code> NSArray *r = [NSArray arrayWithObjects:@"1", "@2", "@3", nil];
+ [r from:0]; =&gt; [@"1", @"2", @"3"]
+ [r from:10]; =&gt; []
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre><span class="o">-</span> <span class="p">(</span><span class="n">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="nl">from:</span><span class="p">(</span><span class="n">NSUInteger</span><span class="p">)</span><span class="n">position</span> <span class="p">{</span>
+  <span class="k">if</span><span class="p">(</span> <span class="n">position</span> <span class="o">&gt;=</span> <span class="p">[</span><span class="n">self</span> <span class="n">count</span><span class="p">])</span> <span class="k">return</span> <span class="p">[</span><span class="n">NSArray</span> <span class="n">array</span><span class="p">];</span>
+
+  <span class="k">return</span> <span class="p">[</span><span class="n">self</span> <span class="nl">subarrayWithRange:</span><span class="n">NSMakeRange</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="p">[</span><span class="n">self</span> <span class="n">count</span><span class="p">]</span> <span class="o">-</span> <span class="n">position</span><span class="p">)];</span>
+<span class="p">}</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="n">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="nl">to:</span><span class="p">(</span><span class="n">NSUInteger</span><span class="p">)</span><span class="n">position</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">[</span><span class="n">self</span> <span class="nl">first:</span><span class="p">(</span><span class="n">position</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)];</span>
+<span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>Returns the first <code>n</code> elements, if it's empty return an empty
+<code>NSArray</code></p>             </td>             <td class="code">               <div class="highlight"><pre><span class="o">-</span> <span class="p">(</span><span class="n">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="nl">first:</span><span class="p">(</span><span class="n">NSUInteger</span><span class="p">)</span><span class="n">numberOfElements</span> <span class="p">{</span>
+  <span class="k">if</span><span class="p">([</span><span class="n">self</span> <span class="n">count</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span> <span class="p">[</span><span class="n">NSArray</span> <span class="n">array</span><span class="p">];</span>
+
+  <span class="k">if</span><span class="p">(</span> <span class="n">numberOfElements</span> <span class="o">&gt;=</span> <span class="p">[</span><span class="n">self</span> <span class="n">count</span><span class="p">])</span> <span class="n">numberOfElements</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span> <span class="n">count</span><span class="p">];</span>
+  <span class="k">return</span> <span class="p">[</span><span class="n">self</span> <span class="nl">subarrayWithRange:</span><span class="n">NSMakeRange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">numberOfElements</span><span class="p">)];</span>
+<span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>These pretty much describe themselves. They just add some
+handy accessors to your arrays without needing to check indices</p>
+
+<pre><code> NSArray *r = [NSArray arrayWithObjects:@"1", "@2", "@3", nil];
+ [r first] =&gt; @"3"
+ [r third] =&gt; @"3"
+ [r fourth] =&gt; nil
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre><span class="o">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="n">first</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">[</span><span class="n">self</span> <span class="nl">CB_safeObjectAtIndex:</span><span class="mi">0</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="n">second</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">[</span><span class="n">self</span> <span class="nl">CB_safeObjectAtIndex:</span><span class="mi">1</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="n">third</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">[</span><span class="n">self</span> <span class="nl">CB_safeObjectAtIndex:</span><span class="mi">2</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="n">fourth</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">[</span><span class="n">self</span> <span class="nl">CB_safeObjectAtIndex:</span><span class="mi">3</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="n">fifth</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">[</span><span class="n">self</span> <span class="nl">CB_safeObjectAtIndex:</span><span class="mi">4</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="n">fortyTwo</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">[</span><span class="n">self</span> <span class="nl">CB_safeObjectAtIndex:</span><span class="mi">41</span><span class="p">];</span>
+<span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>Don't use it. Except when needed, or wanted.</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="o">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nl">CB_safeObjectAtIndex:</span><span class="p">(</span><span class="n">NSUInteger</span><span class="p">)</span><span class="n">index</span> <span class="p">{</span>
+  <span class="k">if</span><span class="p">([</span><span class="n">self</span> <span class="n">count</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">index</span><span class="p">)</span> <span class="k">return</span> <span class="nb">nil</span><span class="p">;</span>
+
+  <span class="k">return</span> <span class="p">[</span><span class="n">self</span> <span class="nl">objectAtIndex:</span><span class="n">index</span><span class="p">];</span>
+<span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <h1>Manipulation</h1>
+
+<pre><code> NSArray *r = [NSArray arrayWithObjects:@"1", @"2", nil];
+ [r join] =&gt; @"12"
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre><span class="o">-</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">join</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">[</span><span class="n">self</span> <span class="nl">componentsJoinedByString:</span><span class="s">@&quot;&quot;</span><span class="p">];</span>
+<span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <p>Only added because join reads much easier than
+<code>componentsJoinedByString</code>, and I keep forgetting the
+latter.</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="o">-</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nl">join:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">seperator</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="p">[</span><span class="n">self</span> <span class="nl">componentsJoinedByString:</span><span class="n">seperator</span><span class="p">];</span>
+<span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <p>Inspired by <a href="https://github.com/mikeash/MACollectionUtilities/blob/master/MACollectionUtilities.m">MACollectionUtilities</a>
+But ditched the prefixed naming scheme, since I don't
+really see the point in doing so.</p>
+
+<p>For example <code>select</code> could clash with the <code>select</code> for
+<code>NSObject</code> (in UIResponders) however, if those two clash
+you have a bigger problem than calling it on an array imho.</p>
+
+<p>So no prefixing, in favor of simpler method names.</p>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-9">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-9">&#182;</a>               </div>               <p>Invokes the block once for each element of self, replacing the
+element with the value returned by block.</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="o">-</span> <span class="p">(</span><span class="n">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="nl">map:</span> <span class="p">(</span><span class="kt">id</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">id</span> <span class="n">obj</span><span class="p">))</span><span class="n">block</span> <span class="p">{</span>
+  <span class="n">NSMutableArray</span> <span class="o">*</span><span class="n">array</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSMutableArray</span> <span class="nl">arrayWithCapacity:</span> <span class="p">[</span><span class="n">self</span> <span class="n">count</span><span class="p">]];</span>
+  <span class="k">for</span><span class="p">(</span><span class="kt">id</span> <span class="n">obj</span> <span class="k">in</span> <span class="n">self</span><span class="p">)</span>
+    <span class="p">[</span><span class="n">array</span> <span class="nl">addObject:</span> <span class="n">block</span><span class="p">(</span><span class="n">obj</span><span class="p">)];</span>
+  <span class="k">return</span> <span class="n">array</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nl">each:</span> <span class="p">(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">id</span> <span class="n">obj</span><span class="p">))</span><span class="n">block</span> <span class="p">{</span>
+  <span class="k">for</span><span class="p">(</span><span class="kt">id</span> <span class="n">obj</span> <span class="k">in</span> <span class="n">self</span><span class="p">)</span>
+    <span class="n">block</span><span class="p">(</span><span class="n">obj</span><span class="p">);</span>
+<span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-10">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-10">&#182;</a>               </div>               <p>Invokes the block passing in successive elements from self,
+returning an array containing those elements for which the block
+returns a true value.</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="n">If</span> <span class="n">no</span> <span class="n">block</span> <span class="n">is</span> <span class="n">given</span><span class="p">,</span> <span class="n">an</span> <span class="n">enumerator</span> <span class="n">is</span> <span class="n">returned</span> <span class="n">instead</span><span class="p">.</span>
+<span class="o">-</span> <span class="p">(</span><span class="n">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="nl">select:</span> <span class="p">(</span><span class="kt">BOOL</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">id</span> <span class="n">obj</span><span class="p">))</span><span class="n">block</span> <span class="p">{</span>
+  <span class="n">NSMutableArray</span> <span class="o">*</span><span class="n">array</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSMutableArray</span> <span class="n">array</span><span class="p">];</span>
+  <span class="k">for</span><span class="p">(</span><span class="kt">id</span> <span class="n">obj</span> <span class="k">in</span> <span class="n">self</span><span class="p">)</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">block</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
+      <span class="p">[</span><span class="n">array</span> <span class="nl">addObject:</span> <span class="n">obj</span><span class="p">];</span>
+  <span class="k">return</span> <span class="n">array</span><span class="p">;</span>
+<span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-11">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-11">&#182;</a>               </div>               <p>Passes each element of the collection to the given block. The
+method returns true if the block never returns false or nil.</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="o">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nl">all:</span> <span class="p">(</span><span class="kt">BOOL</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">id</span> <span class="n">obj</span><span class="p">))</span><span class="n">block</span> <span class="p">{</span>
+    <span class="kt">BOOL</span> <span class="n">match</span> <span class="o">=</span> <span class="n">YES</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">id</span> <span class="n">obj</span> <span class="k">in</span> <span class="n">self</span><span class="p">)</span>
+        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">block</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
+            <span class="n">match</span> <span class="o">=</span> <span class="n">NO</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">match</span><span class="p">;</span>
+<span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-12">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-12">&#182;</a>               </div>               <p>Returns a new array by removing duplicate values in self.</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="o">-</span> <span class="p">(</span><span class="n">NSArray</span><span class="o">*</span><span class="p">)</span><span class="n">uniq</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">[[</span><span class="n">NSSet</span> <span class="nl">setWithArray:</span><span class="n">self</span><span class="p">]</span> <span class="n">allObjects</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="k">@end</span>
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 

@@ -1,0 +1,31 @@
+<!DOCTYPE html>  <html> <head>   <title>NSDictionary+Coby.m</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="NSArray+Coby.html">                 NSArray+Coby.m               </a>                                           <a class="source" href="NSDictionary+Coby.html">                 NSDictionary+Coby.m               </a>                                           <a class="source" href="NSObject+Coby.html">                 NSObject+Coby.m               </a>                                           <a class="source" href="tests.html">                 tests.m               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               NSDictionary+Coby.m             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre><span class="cp">#import &lt;Foundation/Foundation.h&gt;</span>
+
+<span class="k">@implementation</span> <span class="nc">NSDictionary</span> <span class="nl">(Coby)</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <h1>Fetch</h1>
+
+<p>(highly inspired by <a href="http://ruby-doc.org/core/classes/Hash.html#M000728">Ruby</a></p>
+
+<p>Returns a value from the dictionary with the given key.</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="o">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nl">fetch:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">key</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">self</span> <span class="nl">objectForKey:</span><span class="n">key</span><span class="p">];</span>
+<span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>Returns a value from the <code>NSDictionary</code> with the given key, but will
+fallback to the supplied default value if the key isn't found. This
+is especially useful when assigning Dict-values to an array. Since
+we can make sure something other than <code>nil</code> is returned.</p>
+
+<pre><code>  [dict fetch:@"unknown" default:@""];
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre><span class="o">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nl">fetch:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">key</span> <span class="k">default</span><span class="o">:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="n">defaultValue</span> <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="p">[</span><span class="n">self</span> <span class="nl">fetch:</span><span class="n">key</span><span class="p">])</span> <span class="k">return</span> <span class="n">defaultValue</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">([</span><span class="n">self</span> <span class="nl">fetch:</span><span class="n">key</span><span class="p">])</span> <span class="k">return</span> <span class="n">defaultValue</span><span class="p">;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">self</span> <span class="nl">fetch:</span><span class="n">key</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="k">@end</span>
+
+<span class="err">@</span><span class="n">implementation</span> <span class="n">NSMutableDictionary</span> <span class="p">(</span><span class="n">Coby</span><span class="p">)</span>
+<span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nl">set:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="n">object</span> <span class="k">for</span><span class="o">:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">key</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">object</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+
+    <span class="p">[</span><span class="n">self</span> <span class="nl">setObject:</span><span class="n">object</span> <span class="nl">forKey:</span><span class="n">key</span><span class="p">];</span>
+<span class="p">}</span>
+<span class="k">@end</span>
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
