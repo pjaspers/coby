@@ -108,4 +108,8 @@
     return match;
 }
 
+- (NSArray*)uniq {
+    return [[NSSet setWithArray:self] allObjects];
+}
+
 @end
