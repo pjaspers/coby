@@ -2,4 +2,4 @@
 build/*
 
 # Testrunner is compiled by the rake task
-testrunner
+test_runner
