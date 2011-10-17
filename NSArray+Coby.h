@@ -4,4 +4,6 @@
 - (void)each: (void (^)(id obj))block;
 - (NSArray *)select: (BOOL (^)(id obj))block;
 - (BOOL)all: (BOOL (^)(id obj))block;
+- (NSArray*)uniq;
+
 @end
