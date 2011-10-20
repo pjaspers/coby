@@ -108,6 +108,28 @@ static void test_nsdict_fetch_with_block(void)
   TEST_ASSERT([result isEqualToString:shouldBe]);
 }
 
+static void test_nsdict_merge(void)
+{
+  NSDictionary *dict1 = [NSDictionary dictionaryWithObjectsAndKeys:@"a value", @"a", @"b value", @"b",nil];
+  NSDictionary *dict2 = [NSDictionary dictionaryWithObjectsAndKeys:@"c value", @"c", @"newer value", @"b",nil];
+  NSDictionary *shouldBe = [NSDictionary dictionaryWithObjectsAndKeys:@"a value", @"a", @"newer value", @"b", @"c value", @"c", nil];
+  NSDictionary *result = [dict1 merge:dict2];
+
+  TEST_ASSERT([result isEqual:shouldBe]);
+}
+
+static void test_nsdict_merge_with_block(void)
+{
+  NSDictionary *dict1 = [NSDictionary dictionaryWithObjectsAndKeys:@"a value", @"a", @"b value", @"b",nil];
+  NSDictionary *dict2 = [NSDictionary dictionaryWithObjectsAndKeys:@"c value", @"c", @"newer value", @"b",nil];
+  NSDictionary *shouldBe = [NSDictionary dictionaryWithObjectsAndKeys:@"a value", @"a", @"b value - newer value", @"b", @"c value", @"c", nil];
+
+
+  NSDictionary *result = [dict1 merge:dict2 withBlock:^(NSString *key, id oldValue, id newValue){
+      return [NSString stringWithFormat:@"%@ - %@", oldValue, newValue];
+    }];
+  TEST_ASSERT([result isEqual:shouldBe]);
+}
 // # The test run loop
 
 int main(int argc, char **argv)
@@ -127,11 +149,15 @@ int main(int argc, char **argv)
         NSLog(@"---------------------------------------------------------------------------");
         TEST(test_nsdict_fetch_with_block);
         TEST(test_nsdict_fetch_with_block_missing_key);
+        TEST(test_nsdict_merge);
+        TEST(test_nsdict_merge_with_block);
         NSString *message;
         if(gFailureCount)
             message = [NSString stringWithFormat: @"FAILED: %d total assertion failure%s", gFailureCount, gFailureCount > 1 ? "s" : ""];
         else
             message = @"SUCCESS";
+
+        NSLog(@"###########################################################################");
         NSLog(@"Tests complete: %@", message);
     });
     return 0;
