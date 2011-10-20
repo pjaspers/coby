@@ -88,6 +88,26 @@ static void test_cb_safe_object_at_index_with_wrong_index_returns_nil(void)
   TEST_ASSERT([anArray CB_safeObjectAtIndex:4] == nil);
 }
 
+static void test_nsdict_fetch_with_block_missing_key(void)
+{
+  NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:@"Steve",@"name", nil];
+  NSString *shouldBe = @"Looked for: title";
+  NSString *result = [dict fetch:@"title" withBlock:^id(id obj) {
+      return [NSString stringWithFormat:@"Looked for: %@", obj];
+    }];
+  TEST_ASSERT([result isEqualToString:shouldBe]);
+}
+
+static void test_nsdict_fetch_with_block(void)
+{
+  NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:@"Steve",@"name", nil];
+  NSString *shouldBe = @"Looked for: Steve";
+  NSString *result = [dict fetch:@"name" withBlock:^id(id obj) {
+      return [NSString stringWithFormat:@"Looked for: %@", obj];
+    }];
+  TEST_ASSERT([result isEqualToString:shouldBe]);
+}
+
 // # The test run loop
 
 int main(int argc, char **argv)
@@ -103,6 +123,10 @@ int main(int argc, char **argv)
         TEST(test_cb_safe_object_at_index_with_wrong_index_returns_nil);
         TEST(test_cb_safe_object_at_index_with_correct_index);
         NSLog(@"---------------------------------------------------------------------------");
+        NSLog(@"NSDictionary");
+        NSLog(@"---------------------------------------------------------------------------");
+        TEST(test_nsdict_fetch_with_block);
+        TEST(test_nsdict_fetch_with_block_missing_key);
         NSString *message;
         if(gFailureCount)
             message = [NSString stringWithFormat: @"FAILED: %d total assertion failure%s", gFailureCount, gFailureCount > 1 ? "s" : ""];

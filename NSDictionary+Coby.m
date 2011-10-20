@@ -3,26 +3,42 @@
 @implementation NSDictionary (Coby)
 
 // # Fetch
-// (highly inspired by [Ruby](http://ruby-doc.org/core/classes/Hash.html#M000728)
+// Returns a value from the `NSDictionary` for the given key.
 //
-// Returns a value from the dictionary with the given key.
 //
 - (id)fetch:(NSString *)key {
     return [self objectForKey:key];
 }
 
 //
-// Returns a value from the `NSDictionary` with the given key, but will
-// fallback to the supplied default value if the key isn't found. This
-// is especially useful when assigning Dict-values to an array. Since
-// we can make sure something other than `nil` is returned.
+// If a default is given, then that will be returned for a missing
+// key. This is especially useful when assigning Dict-values to an
+// array. Since we can make sure something other than `nil` is
+// returned.
 //
 //       [dict fetch:@"unknown" default:@""];
 //
 - (id)fetch:(NSString *)key default:(id)defaultValue {
     if(![self fetch:key]) return defaultValue;
-    if([self fetch:key]) return defaultValue;
     return [self fetch:key];
+}
+
+// If a code block is specified, then that will be run and its result
+// returned.
+//
+//      [dict fetch:@"unknownKey" withBlock:^id(id keyOrValue) {
+//        return [NSString stringWithFormat:@"Looked for: %@", obj];
+//      }];
+//      => @"Looked for: unknownKey"
+//
+//      [dict fetch:@"knownKey" withBlock:^id(id keyOrValue) {
+//        return [NSString stringWithFormat:@"Looked for: %@", obj];
+//      }];
+//      => @"Looked for: value_for_knownKey"
+//
+- (id)fetch:(NSString *)key withBlock:(id (^)(id keyOrValue))block {
+  if(![self fetch:key]) return block(key);
+  return block([self fetch:key]);
 }
 
 @end
