@@ -2,16 +2,7 @@
 <span class="cp">#import &quot;NSObject+Coby.h&quot;</span>
 
 
-<span class="k">@implementation</span> <span class="nc">NSObject</span> <span class="nl">(TTOUtilities)</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <h1>Empty</h1>
-
-<p>Tries do determine if an object is empty, strings are empty
-if the are <code>nil</code> or contain a blank string. Arrays are empty
-if they have no objects, and so on.</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="o">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="n">isEmpty</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="n">self</span> <span class="o">==</span> <span class="nb">nil</span>
-	<span class="o">||</span> <span class="p">([</span><span class="n">self</span> <span class="nl">isEqual:</span><span class="p">[</span><span class="n">NSNull</span> <span class="n">null</span><span class="p">]])</span> <span class="c1">// addition for things like coredata</span>
-	<span class="o">||</span> <span class="p">([</span><span class="n">self</span> <span class="nl">try:</span><span class="s">@&quot;length&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
-	<span class="o">||</span> <span class="p">([</span><span class="n">self</span> <span class="nl">try:</span><span class="s">@&quot;count&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">);</span>
-<span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <h1>Try</h1>
+<span class="k">@implementation</span> <span class="nc">NSObject</span> <span class="nl">(Coby)</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <h1>Try</h1>
 
 <p>(highly inspired by <a href="http://api.rubyonrails.org/classes/Object.html#method-i-try">Rails</a></p>
 
@@ -22,7 +13,7 @@ does not respond to the method.</p>
 <pre><code>  [Person try:@"name"];
 </code></pre>             </td>             <td class="code">               <div class="highlight"><pre><span class="o">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nl">try:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">method</span> <span class="p">{</span>
     <span class="k">return</span> <span class="p">[</span><span class="n">self</span> <span class="nl">try:</span><span class="n">method</span> <span class="nl">with:</span><span class="nb">nil</span><span class="p">];</span>
-<span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>Invokes the method identified by the string <code>method</code>, just like
+<span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>Invokes the method identified by the string <code>method</code>, just like
 <code>performSelector</code> except this will just return nil if the object
 does not respond to the method. It will pass the object to the method.</p>
 
@@ -31,7 +22,7 @@ does not respond to the method. It will pass the object to the method.</p>
     <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">[</span><span class="n">self</span> <span class="nl">respondsToSelector:</span><span class="n">NSSelectorFromString</span><span class="p">(</span><span class="n">method</span><span class="p">)])</span> <span class="k">return</span> <span class="nb">nil</span><span class="p">;</span>
 
     <span class="k">return</span> <span class="p">[</span><span class="n">self</span> <span class="nl">performSelector:</span><span class="n">NSSelectorFromString</span><span class="p">(</span><span class="n">method</span><span class="p">)</span> <span class="nl">withObject:</span><span class="nb">nil</span><span class="p">];</span>
-<span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>Quick way to "benchmark" a block of code, will log the number
+<span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>Quick way to "benchmark" a block of code, will log the number
 of seconds the block took to execute.</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="o">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nl">benchmark:</span> <span class="p">(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)())</span><span class="n">block</span> <span class="p">{</span>
 	<span class="n">NSDate</span> <span class="o">*</span><span class="n">startingDate</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSDate</span> <span class="n">date</span><span class="p">];</span>
     <span class="n">block</span><span class="p">();</span>

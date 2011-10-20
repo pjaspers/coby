@@ -2,20 +2,7 @@
 #import "NSObject+Coby.h"
 
 
-@implementation NSObject (TTOUtilities)
-
-// # Empty
-//
-// Tries do determine if an object is empty, strings are empty
-// if the are `nil` or contain a blank string. Arrays are empty
-// if they have no objects, and so on.
-
-- (BOOL)isEmpty {
-    return self == nil
-	|| ([self isEqual:[NSNull null]]) // addition for things like coredata
-	|| ([self try:@"length"] == 0)
-	|| ([self try:@"count"] == 0);
-}
+@implementation NSObject (Coby)
 
 // # Try
 // (highly inspired by [Rails](http://api.rubyonrails.org/classes/Object.html#method-i-try)
