@@ -1,21 +1,78 @@
 <!DOCTYPE html>  <html> <head>   <title>NSDictionary+Coby.m</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="NSArray+Coby.html">                 NSArray+Coby.m               </a>                                           <a class="source" href="NSDictionary+Coby.html">                 NSDictionary+Coby.m               </a>                                           <a class="source" href="NSObject+Coby.html">                 NSObject+Coby.m               </a>                                           <a class="source" href="tests.html">                 tests.m               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               NSDictionary+Coby.m             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre><span class="cp">#import &lt;Foundation/Foundation.h&gt;</span>
+<span class="cp">#import &quot;NSDictionary+Coby.h&quot;</span>
 
-<span class="k">@implementation</span> <span class="nc">NSDictionary</span> <span class="nl">(Coby)</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <h1>Fetch</h1>
+<span class="k">@implementation</span> <span class="nc">NSDictionary</span> <span class="nl">(Coby)</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>Calls block once for each key in the dictionary, passing the
+key-value pair as parameters.</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="o">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nl">each:</span> <span class="p">(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">id</span> <span class="n">key</span><span class="p">,</span> <span class="kt">id</span> <span class="n">value</span><span class="p">))</span><span class="n">block</span> <span class="p">{</span>
+  <span class="p">[</span><span class="n">self</span> <span class="nl">enumerateKeysAndObjectsUsingBlock:</span> <span class="o">^</span><span class="p">(</span><span class="kt">id</span> <span class="n">key</span><span class="p">,</span> <span class="kt">id</span> <span class="n">obj</span><span class="p">,</span> <span class="kt">BOOL</span> <span class="o">*</span><span class="n">stop</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">block</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">obj</span><span class="p">);</span>
+    <span class="p">}];</span>
+<span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>Returns a new dictionary containing the contents of
+<code>otherDictionary</code> and the contents of itself.</p>
 
-<p>(highly inspired by <a href="http://ruby-doc.org/core/classes/Hash.html#M000728">Ruby</a></p>
+<p>The value for each duplicate key will be the value of the key
+found in <code>otherDictionary</code>.</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="o">-</span> <span class="p">(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nl">merge:</span><span class="p">(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="n">otherDictionary</span> <span class="p">{</span>
+  <span class="n">NSMutableDictionary</span> <span class="o">*</span> <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSMutableDictionary</span> <span class="nl">dictionaryWithDictionary:</span><span class="n">self</span><span class="p">];</span>
 
-<p>Returns a value from the dictionary with the given key.</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="o">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nl">fetch:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">key</span> <span class="p">{</span>
+  <span class="p">[</span><span class="n">otherDictionary</span> <span class="nl">each:</span> <span class="o">^</span><span class="p">(</span><span class="kt">id</span> <span class="n">key</span><span class="p">,</span> <span class="kt">id</span> <span class="n">obj</span><span class="p">)</span> <span class="p">{</span>
+        <span class="p">[</span><span class="n">result</span> <span class="nl">setObject:</span><span class="n">obj</span> <span class="nl">forKey:</span><span class="n">key</span><span class="p">];</span>
+    <span class="p">}];</span>
+  <span class="k">return</span> <span class="p">(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span> <span class="p">[[</span><span class="n">result</span> <span class="n">mutableCopy</span><span class="p">]</span> <span class="n">autorelease</span><span class="p">];</span>
+<span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>The value for each duplicate key is determined by calling the
+block with the key, its value in hsh and its value in other_hash.</p>
+
+<pre><code>  dict1 = [NSDictionary dictionaryWithObjectsAndKeys:
+            @"a value", @"a",
+            @"b value", @"b",nil];
+  dict2 = [NSDictionary dictionaryWithObjectsAndKeys:
+            @"c value", @"c",
+            @"newer value", @"b",nil];
+
+ [dict1 merge:dict2 withBlock:^(id key, id old, id new){
+   return [NSString stringWithFormat:@"%@ - %@",
+            oldValue, newValue];
+ }];
+
+ =&gt; {"a" =&gt; @"a value", "b" =&gt; @"b value - newer value", "c" =&gt; @"c value"}
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre><span class="o">-</span> <span class="p">(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nl">merge:</span><span class="p">(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="n">otherDictionary</span> <span class="nl">withBlock:</span><span class="p">(</span><span class="kt">id</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">NSString</span> <span class="o">*</span><span class="n">key</span><span class="p">,</span> <span class="kt">id</span> <span class="n">oldValue</span><span class="p">,</span> <span class="kt">id</span> <span class="n">newValue</span><span class="p">))</span><span class="n">block</span> <span class="p">{</span>
+  <span class="n">NSMutableDictionary</span> <span class="o">*</span> <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSMutableDictionary</span> <span class="nl">dictionaryWithDictionary:</span><span class="n">self</span><span class="p">];</span>
+
+  <span class="p">[</span><span class="n">otherDictionary</span> <span class="nl">each:</span> <span class="o">^</span><span class="p">(</span><span class="kt">id</span> <span class="n">key</span><span class="p">,</span> <span class="kt">id</span> <span class="n">obj</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">([</span><span class="n">self</span> <span class="nl">fetch:</span><span class="n">key</span><span class="p">])</span> <span class="p">{</span>
+        <span class="kt">id</span> <span class="n">object</span> <span class="o">=</span> <span class="n">block</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="p">[</span><span class="n">self</span> <span class="nl">fetch:</span><span class="n">key</span><span class="p">],</span> <span class="n">obj</span><span class="p">);</span>
+        <span class="p">[</span><span class="n">result</span> <span class="nl">setObject:</span><span class="n">object</span> <span class="nl">forKey:</span><span class="n">key</span><span class="p">];</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="p">[</span><span class="n">result</span> <span class="nl">setObject:</span><span class="n">obj</span> <span class="nl">forKey:</span><span class="n">key</span><span class="p">];</span>
+      <span class="p">}</span>
+    <span class="p">}];</span>
+  <span class="k">return</span> <span class="p">(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span> <span class="p">[[</span><span class="n">result</span> <span class="n">mutableCopy</span><span class="p">]</span> <span class="n">autorelease</span><span class="p">];</span>
+<span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <h1>Fetch</h1>
+
+<p>Returns a value from the <code>NSDictionary</code> for the given key.</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="o">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nl">fetch:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">key</span> <span class="p">{</span>
     <span class="k">return</span> <span class="p">[</span><span class="n">self</span> <span class="nl">objectForKey:</span><span class="n">key</span><span class="p">];</span>
-<span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>Returns a value from the <code>NSDictionary</code> with the given key, but will
-fallback to the supplied default value if the key isn't found. This
-is especially useful when assigning Dict-values to an array. Since
-we can make sure something other than <code>nil</code> is returned.</p>
+<span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p>If a default is given, then that will be returned for a missing
+key. This is especially useful when assigning Dict-values to an
+array. Since we can make sure something other than <code>nil</code> is
+returned.</p>
 
 <pre><code>  [dict fetch:@"unknown" default:@""];
 </code></pre>             </td>             <td class="code">               <div class="highlight"><pre><span class="o">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nl">fetch:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">key</span> <span class="k">default</span><span class="o">:</span><span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="n">defaultValue</span> <span class="p">{</span>
     <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="p">[</span><span class="n">self</span> <span class="nl">fetch:</span><span class="n">key</span><span class="p">])</span> <span class="k">return</span> <span class="n">defaultValue</span><span class="p">;</span>
-    <span class="k">if</span><span class="p">([</span><span class="n">self</span> <span class="nl">fetch:</span><span class="n">key</span><span class="p">])</span> <span class="k">return</span> <span class="n">defaultValue</span><span class="p">;</span>
     <span class="k">return</span> <span class="p">[</span><span class="n">self</span> <span class="nl">fetch:</span><span class="n">key</span><span class="p">];</span>
+<span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <p>If a code block is specified, then that will be run and its result
+returned.</p>
+
+<pre><code> [dict fetch:@"unknownKey" withBlock:^id(id keyOrValue) {
+   return [NSString stringWithFormat:@"Looked for: %@", obj];
+ }];
+ =&gt; @"Looked for: unknownKey"
+
+ [dict fetch:@"knownKey" withBlock:^id(id keyOrValue) {
+   return [NSString stringWithFormat:@"Looked for: %@", obj];
+ }];
+ =&gt; @"Looked for: value_for_knownKey"
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre><span class="o">-</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nl">fetch:</span><span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="n">key</span> <span class="nl">withBlock:</span><span class="p">(</span><span class="kt">id</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">id</span> <span class="n">keyOrValue</span><span class="p">))</span><span class="n">block</span> <span class="p">{</span>
+  <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="p">[</span><span class="n">self</span> <span class="nl">fetch:</span><span class="n">key</span><span class="p">])</span> <span class="k">return</span> <span class="n">block</span><span class="p">(</span><span class="n">key</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">block</span><span class="p">([</span><span class="n">self</span> <span class="nl">fetch:</span><span class="n">key</span><span class="p">]);</span>
 <span class="p">}</span>
 
 <span class="k">@end</span>
