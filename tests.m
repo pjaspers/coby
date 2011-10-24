@@ -135,8 +135,9 @@ static void test_nsdict_merge_with_block(void)
 int main(int argc, char **argv)
 {
     WithPool(^{
-        NSLog(@"NSArray - Accessors");
+        NSLog(@"NSArray");
         NSLog(@"---------------------------------------------------------------------------");
+        NSLog(@" - Accessors");
         TEST(test_nsarray_from_returns_empty_array_when_too_big);
         TEST(test_nsarray_from_returns_correct_result);
         TEST(test_nsarray_to_returns_correct_result);
@@ -144,6 +145,8 @@ int main(int argc, char **argv)
         TEST(test_nsarray_to_returns_array_with_too_large_argument);
         TEST(test_cb_safe_object_at_index_with_wrong_index_returns_nil);
         TEST(test_cb_safe_object_at_index_with_correct_index);
+        NSLog(@" - Higher Level Functions");
+
         NSLog(@"---------------------------------------------------------------------------");
         NSLog(@"NSDictionary");
         NSLog(@"---------------------------------------------------------------------------");
