@@ -20,4 +20,19 @@
 
   return [NSString stringWithString:aString];
 }
+
+- (NSUInteger)index:(NSString *)subString {
+  return [self index:subString startingAt:0];
+}
+
+- (NSUInteger)index:(NSString *)subString startingAt:(NSUInteger)startingIndex {
+  if (startingIndex > [self length]) return -1;
+  NSRange startingRange = NSMakeRange(startingIndex, [self length] - startingIndex);
+  NSRange aRange = [self rangeOfString:subString options:0 range:startingRange];
+
+  if (aRange.location == NSNotFound) return -1;
+  return aRange.location;
+
+}
+
 @end

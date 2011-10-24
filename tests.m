@@ -146,6 +146,16 @@ static void test_nsstring_center(void)
   TEST_ASSERT([[@"a" center:4] isEqualToString:@" a  "]);
 }
 
+static void test_nsstring_index(void)
+{
+  NSString *searchString = @"Coby yboC";
+  TEST_ASSERT([searchString index:@"C"] == 0);
+  TEST_ASSERT([searchString index:@"D"] == -1);
+  TEST_ASSERT([searchString index:@"by"] == 2);
+
+  TEST_ASSERT([searchString index:@"C" startingAt:4] == 8);
+  TEST_ASSERT([searchString index:@"C" startingAt:20] == -1);
+}
 // # The test run loop
 
 int main(int argc, char **argv)
@@ -174,6 +184,7 @@ int main(int argc, char **argv)
         NSLog(@"NSString");
         NSLog(@"---------------------------------------------------------------------------");
         TEST(test_nsstring_center);
+        TEST(test_nsstring_index);
         NSString *message;
         if(gFailureCount)
             message = [NSString stringWithFormat: @"FAILED: %d total assertion failure%s", gFailureCount, gFailureCount > 1 ? "s" : ""];
