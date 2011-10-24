@@ -130,6 +130,16 @@ static void test_nsdict_merge_with_block(void)
     }];
   TEST_ASSERT([result isEqual:shouldBe]);
 }
+
+static void test_nsdict_merge_with_block(void)
+{
+  NSString *toBePadded = @"Coby";
+  NSString *shouldBe = @"        Coby        ";
+  NSString *shouldBeWithPadding = "________Coby________";
+  TEST_ASSERT([toBePadded center:20], shouldBe);
+  TEST_ASSERT([toBePadded center:20 withPaddedString:@"_"], shouldBeWithPadding);
+}
+
 // # The test run loop
 
 int main(int argc, char **argv)
@@ -154,6 +164,10 @@ int main(int argc, char **argv)
         TEST(test_nsdict_fetch_with_block_missing_key);
         TEST(test_nsdict_merge);
         TEST(test_nsdict_merge_with_block);
+        NSLog(@"---------------------------------------------------------------------------");
+        NSLog(@"NSString");
+        NSLog(@"---------------------------------------------------------------------------");
+        TEST(test_nsstring_center);
         NSString *message;
         if(gFailureCount)
             message = [NSString stringWithFormat: @"FAILED: %d total assertion failure%s", gFailureCount, gFailureCount > 1 ? "s" : ""];
