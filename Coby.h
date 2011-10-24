@@ -32,6 +32,10 @@
 
 #import "NSDictionary+Coby.h"
 
+// [Additions to NSString](docs/NSString+Coby.html)
+
+#import "NSString+Coby.h"
+
 // ## Common Macros
 
 //      CGRect aRect = (CGRect){ 0,1,2,3};
