@@ -131,13 +131,19 @@ static void test_nsdict_merge_with_block(void)
   TEST_ASSERT([result isEqual:shouldBe]);
 }
 
-static void test_nsdict_merge_with_block(void)
+static void test_nsstring_center(void)
 {
   NSString *toBePadded = @"Coby";
   NSString *shouldBe = @"        Coby        ";
-  NSString *shouldBeWithPadding = "________Coby________";
-  TEST_ASSERT([toBePadded center:20], shouldBe);
-  TEST_ASSERT([toBePadded center:20 withPaddedString:@"_"], shouldBeWithPadding);
+  NSString *shouldBeWithPadding = @"________Coby________";
+
+  NSString *shortResult = [toBePadded center:1];
+  NSString *result = [toBePadded center:20];
+  NSString *resultWithPadding = [toBePadded center:20 withPaddedString:@"_"];
+  TEST_ASSERT([shortResult isEqualToString:toBePadded]);
+  TEST_ASSERT([result isEqualToString:shouldBe]);
+  TEST_ASSERT([resultWithPadding isEqualToString:shouldBeWithPadding]);
+  TEST_ASSERT([[@"a" center:4] isEqualToString:@" a  "]);
 }
 
 // # The test run loop
