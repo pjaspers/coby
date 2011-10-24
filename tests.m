@@ -156,6 +156,13 @@ static void test_nsstring_index(void)
   TEST_ASSERT([searchString index:@"C" startingAt:4] == 8);
   TEST_ASSERT([searchString index:@"C" startingAt:20] == -1);
 }
+
+static void test_nsstring_reverse(void)
+{
+  TEST_ASSERT([[@"Coby" reverse] isEqualToString:@"yboC"]);
+  TEST_ASSERT([[@"Côby" reverse] isEqualToString:@"ybôC"]);
+}
+
 // # The test run loop
 
 int main(int argc, char **argv)
@@ -185,6 +192,9 @@ int main(int argc, char **argv)
         NSLog(@"---------------------------------------------------------------------------");
         TEST(test_nsstring_center);
         TEST(test_nsstring_index);
+        TEST(test_nsstring_reverse);
+
+
         NSString *message;
         if(gFailureCount)
             message = [NSString stringWithFormat: @"FAILED: %d total assertion failure%s", gFailureCount, gFailureCount > 1 ? "s" : ""];

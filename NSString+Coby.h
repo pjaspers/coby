@@ -13,4 +13,7 @@
 // position in the string to begin the search.
 - (NSUInteger)index:(NSString *)subString;
 - (NSUInteger)index:(NSString *)subString startingAt:(NSUInteger)startingIndex;
+
+// Returns a new string with the characters from str in reverse order.
+- (NSString *)reverse;
 @end
