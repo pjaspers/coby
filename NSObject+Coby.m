@@ -24,9 +24,19 @@
 //       [Person try:@"find" with:@"Jake"   ];
 //
 - (id)try:(NSString *)method with:(id)object{
-    if (![self respondsToSelector:NSSelectorFromString(method)]) return nil;
+  return [self try:method with:object default:nil];
+}
 
-    return [self performSelector:NSSelectorFromString(method) withObject:nil];
+- (id)try:(NSString *)method default:(id)object{
+  return [self try:method with:nil default:object];
+}
+
+- (id)try:(NSString *)method with:(id)object default:(id)returnObject {
+  if (![self respondsToSelector:NSSelectorFromString(method)]) return returnObject;
+
+  id result = [self performSelector:NSSelectorFromString(method) withObject:object];
+  if (result) return result;
+  return returnObject;
 }
 
 // Quick way to "benchmark" a block of code, will log the number
