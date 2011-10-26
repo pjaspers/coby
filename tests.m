@@ -76,6 +76,29 @@ static void test_nsarray_to_returns_correct_result(void)
   TEST_ASSERT([[anArray to:1] isEqual:shouldBe]);
 }
 
+static void test_nsarray_manipulations(void)
+{
+  NSArray *anArray = [NSArray arrayWithObjects:@"1", @"Two", @"3", @"Four",nil];
+  NSArray *partitioned = [anArray partition:^BOOL (id obj){
+      if ([obj length] > 1) return YES;
+      return NO;
+    }];
+  NSArray *partitionedShouldBe = [NSArray arrayWithObjects:
+                                            [NSArray arrayWithObjects:@"Two", @"Four", nil],
+                                          [NSArray arrayWithObjects:@"1", @"3", nil], nil];
+  TEST_ASSERT([partitionedShouldBe isEqual:partitionedShouldBe]);
+
+  BOOL anyHasLengthOfZero = [anArray any:^BOOL (id obj){ return [obj length] == 0;}];
+  BOOL anyHasLengthOfOne = [anArray any:^BOOL (id obj){ return [obj length] == 1;}];
+  TEST_ASSERT(anyHasLengthOfOne);
+  TEST_ASSERT(!anyHasLengthOfZero);
+
+  TEST_ASSERT([[anArray first] isEqual:[anArray detect:^BOOL (id obj){ return [obj length] == 1 ;}]]);
+
+  NSArray *firstTwoElements = [NSArray arrayWithObjects:@"1", @"Two", nil];
+  TEST_ASSERT([[anArray take:2] isEqual:firstTwoElements]);
+}
+
 static void test_cb_safe_object_at_index_with_correct_index(void)
 {
   NSArray *anArray = [NSArray arrayWithObjects:@"One", @"Two", @"Three", nil];
@@ -176,6 +199,7 @@ int main(int argc, char **argv)
         TEST(test_nsarray_to_returns_correct_result);
         TEST(test_nsarray_to_returns_empty_array_on_empty_array);
         TEST(test_nsarray_to_returns_array_with_too_large_argument);
+        TEST(test_nsarray_manipulations);
         TEST(test_cb_safe_object_at_index_with_wrong_index_returns_nil);
         TEST(test_cb_safe_object_at_index_with_correct_index);
         NSLog(@" - Higher Level Functions");

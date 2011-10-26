@@ -136,4 +136,44 @@
     return [[NSSet setWithArray:self] allObjects];
 }
 
+// Returns an `NSArray` containing two arrays, the first containing
+// the elements of self for which the block evaluates to true,
+// the second containing the rest.
+
+- (NSArray*)partition:(BOOL (^)(id obj))block {
+    NSMutableArray *yes = [NSMutableArray array];
+    NSMutableArray *no = [NSMutableArray array];
+    for(id obj in self)
+        [(block(obj) ? yes : no) addObject: obj];
+    return [NSArray arrayWithObjects:yes, no, nil];
+}
+
+// Passes each element of the array to the given block. The
+// method returns true if the block ever returns a value
+// other than false or nil.
+- (BOOL)any:(BOOL (^)(id obj))block {
+    for(id obj in self)
+        if (block(obj)) return YES;
+    return NO;
+}
+
+// Passes each entry in self to block. Returns the first
+// for which block is not false. If no object matches returns nil.
+- (id)detect:(BOOL (^)(id obj))block {
+    for(id obj in self)
+        if (block(obj)) return obj;
+    return nil;
+}
+
+// Returns first n elements from self
+- (NSArray *)take:(int)limit {
+    if (limit >= self.count) return self;
+    if (limit == 0) return [NSArray array];
+
+    NSMutableArray *array = [NSMutableArray array];
+    for (int i=0; i<limit; i++) {
+        [array addObject:[self objectAtIndex:i]];
+    }
+    return array;
+}
 @end

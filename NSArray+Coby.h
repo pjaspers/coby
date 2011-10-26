@@ -18,5 +18,8 @@
 - (NSArray *)select: (BOOL (^)(id obj))block;
 - (BOOL)all: (BOOL (^)(id obj))block;
 - (NSArray*)uniq;
-
+- (NSArray*)partition:(BOOL (^)(id obj))block;
+- (BOOL)any:(BOOL (^)(id obj))block;
+- (id)detect:(BOOL (^)(id obj))block;
+- (NSArray *)take:(int)limit;
 @end
