@@ -55,7 +55,7 @@
 //
 // It is also very useful to init an object, for example:
 //
-//      UIView *aView = [[[UIView alloc] init] tap:^id(id obj){
+//      UIView *aView = [[[UIView alloc] init] tap:^void (id obj){
 //          obj.backgroundColor = [UIColor redColor];
 //          obj.frame = (CGRect) {0,0,100,100};
 //      }];
