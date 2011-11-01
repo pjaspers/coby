@@ -49,7 +49,18 @@
   return returnObject;
 }
 
-- (id)tap:(id (^)(id obj))block {
+// Yields the object to the block, and then returns the object.
+// The primary purpose of this method is to “tap into” a method chain, in order to
+// perform operations on intermediate results within the chain.
+//
+// It is also very useful to init an object, for example:
+//
+//      UIView *aView = [[[UIView alloc] init] tap:^id(id obj){
+//          obj.backgroundColor = [UIColor redColor];
+//          obj.frame = (CGRect) {0,0,100,100};
+//      }];
+//
+- (id)tap:(void (^)(id obj))block {
   block(self);
   return self;
 }

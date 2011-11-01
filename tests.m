@@ -192,9 +192,8 @@ static void test_nsobject(void)
   TEST_ASSERT([[testArray send:@"lastObject"] isEqualTo:[testArray lastObject]]);
   TEST_ASSERT([[testArray try:@"lastObject"] isEqualTo:[testArray lastObject]]);
   TEST_ASSERT([[testArray try:@"something" default:@"bla"] isEqualTo:@"bla"]);
-  NSMutableArray *s = [[NSMutableArray array] tap:^id(id obj){
+  NSMutableArray *s = [[NSMutableArray array] tap:^void(id obj){
       [obj addObject:@"A"];
-      return obj;
     }];
   TEST_ASSERT([[NSArray arrayWithArray:s] isEqualTo:[NSArray arrayWithObject:@"A"]]);
 }
@@ -205,7 +204,7 @@ int main(int argc, char **argv)
 {
     WithPool(^{
         NSLog(@"NSArray");
-        NSLog(@"---------------------------------------------------------------------------");
+        NSLog(@"----------------------------------");
         NSLog(@" - Accessors");
         TEST(test_nsarray_from_returns_empty_array_when_too_big);
         TEST(test_nsarray_from_returns_correct_result);
@@ -217,22 +216,22 @@ int main(int argc, char **argv)
         TEST(test_cb_safe_object_at_index_with_correct_index);
         NSLog(@" - Higher Level Functions");
 
-        NSLog(@"---------------------------------------------------------------------------");
+        NSLog(@"----------------------------------");
         NSLog(@"NSDictionary");
-        NSLog(@"---------------------------------------------------------------------------");
+        NSLog(@"----------------------------------");
         TEST(test_nsdict_fetch_with_block);
         TEST(test_nsdict_fetch_with_block_missing_key);
         TEST(test_nsdict_merge);
         TEST(test_nsdict_merge_with_block);
-        NSLog(@"---------------------------------------------------------------------------");
+        NSLog(@"----------------------------------");
         NSLog(@"NSString");
-        NSLog(@"---------------------------------------------------------------------------");
+        NSLog(@"----------------------------------");
         TEST(test_nsstring_center);
         TEST(test_nsstring_index);
         TEST(test_nsstring_reverse);
-        NSLog(@"---------------------------------------------------------------------------");
+        NSLog(@"----------------------------------");
         NSLog(@"NSObject");
-        NSLog(@"---------------------------------------------------------------------------");
+        NSLog(@"----------------------------------");
         TEST(test_nsobject);
         NSString *message;
         if(gFailureCount)
@@ -240,7 +239,7 @@ int main(int argc, char **argv)
         else
             message = @"SUCCESS";
 
-        NSLog(@"###########################################################################");
+        NSLog(@"###################################");
         NSLog(@"Tests complete: %@", message);
     });
     return 0;
