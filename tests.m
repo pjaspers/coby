@@ -186,6 +186,19 @@ static void test_nsstring_reverse(void)
   TEST_ASSERT([[@"Côby" reverse] isEqualToString:@"ybôC"]);
 }
 
+static void test_nsobject(void)
+{
+  NSArray *testArray = [NSArray arrayWithObjects:@"A",@"B", @"C", nil];
+  TEST_ASSERT([[testArray send:@"lastObject"] isEqualTo:[testArray lastObject]]);
+  TEST_ASSERT([[testArray try:@"lastObject"] isEqualTo:[testArray lastObject]]);
+  TEST_ASSERT([[testArray try:@"something" default:@"bla"] isEqualTo:@"bla"]);
+  NSMutableArray *s = [[NSMutableArray array] tap:^id(id obj){
+      [obj addObject:@"A"];
+      return obj;
+    }];
+  TEST_ASSERT([[NSArray arrayWithArray:s] isEqualTo:[NSArray arrayWithObject:@"A"]]);
+}
+
 // # The test run loop
 
 int main(int argc, char **argv)
@@ -217,8 +230,10 @@ int main(int argc, char **argv)
         TEST(test_nsstring_center);
         TEST(test_nsstring_index);
         TEST(test_nsstring_reverse);
-
-
+        NSLog(@"---------------------------------------------------------------------------");
+        NSLog(@"NSObject");
+        NSLog(@"---------------------------------------------------------------------------");
+        TEST(test_nsobject);
         NSString *message;
         if(gFailureCount)
             message = [NSString stringWithFormat: @"FAILED: %d total assertion failure%s", gFailureCount, gFailureCount > 1 ? "s" : ""];
