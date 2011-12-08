@@ -6,7 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Coby.h"
+#import "../Coby.h"
 
 // # Tests setup
 static void WithPool(void (^block)(void))
