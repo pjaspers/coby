@@ -22,7 +22,11 @@
   [otherDictionary each: ^(id key, id obj) {
         [result setObject:obj forKey:key];
     }];
+#if __has_feature(objc_arc)
+  return (NSDictionary *) [result mutableCopy];
+#else
   return (NSDictionary *) [[result mutableCopy] autorelease];
+#endif
 }
 
 // The value for each duplicate key is determined by calling the
@@ -52,7 +56,11 @@
         [result setObject:obj forKey:key];
       }
     }];
+#if __has_feature(objc_arc)
+  return (NSDictionary *) [result mutableCopy];
+#else
   return (NSDictionary *) [[result mutableCopy] autorelease];
+#endif
 }
 
 // # Fetch

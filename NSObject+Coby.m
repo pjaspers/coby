@@ -1,6 +1,6 @@
 #import <Foundation/Foundation.h>
 #import "NSObject+Coby.h"
-
+#import <objc/message.h>
 
 @implementation NSObject (Coby)
 
@@ -11,7 +11,7 @@
 
 // Basically an alias for `performSelector:withObject:`
 - (id)send:(NSString *)method with:(id)object {
-  return [self performSelector:NSSelectorFromString(method) withObject:object];
+    return objc_msgSend(self, NSSelectorFromString(method));
 }
 
 // # Try
