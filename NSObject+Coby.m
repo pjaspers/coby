@@ -11,7 +11,7 @@
 
 // Basically an alias for `performSelector:withObject:`
 - (id)send:(NSString *)method with:(id)object {
-    return objc_msgSend(self, NSSelectorFromString(method));
+    return objc_msgSend(self, NSSelectorFromString(method), object);
 }
 
 // # Try
