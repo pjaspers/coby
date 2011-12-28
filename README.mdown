@@ -1,3 +1,8 @@
 # Coby
 
 Opinionated categories on default objc-classes.
+
+## Contributors
+
+- @fousa
+- @inferis
